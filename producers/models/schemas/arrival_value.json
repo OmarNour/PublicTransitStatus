@@ -1,7 +1,7 @@
 {
   "type": "record",
-  "name": "arrival_values",
-  "namespace": "pts.arrival_values",
+  "name": "arrival_records",
+  "namespace": "pts.arrival_records",
   "fields":
           [
             {"name": "station_id", "type": "int"},
