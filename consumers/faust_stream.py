@@ -41,7 +41,7 @@ out_topic = app.topic("org.chicago.cta.trx_stations.table.v1", value_type=Transf
 
 # TODO: Define a Faust Table
 table = app.Table(
-    "trx_stations_table",
+    name="trx_stations_table",
     default=int,
     partitions=1,
     changelog_topic=out_topic,
