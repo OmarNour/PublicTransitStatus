@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class Station(Producer):
     """Defines a single station"""
-    topic_name = "org.chicago.cta.stations.table.v1"
+
     key_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/arrival_key.json")
     value_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/arrival_value.json")
 
@@ -25,9 +25,10 @@ class Station(Producer):
                 .replace("-", "_")
                 .replace("'", "")
         )
+        topic_name = f"org.chicago.cta.stations.arrivals.{self.station_name}"
 
         super().__init__(
-            topic_name=Station.topic_name,
+            topic_name=topic_name,
             key_schema=Station.key_schema,
             value_schema=Station.value_schema,
             num_partitions=1,
