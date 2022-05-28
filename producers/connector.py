@@ -46,7 +46,7 @@ def configure_connector():
                "mode": "incrementing",
                "incrementing.column.name": "stop_id",
                "topic.prefix": "kc-postgres-",
-               "poll.interval.ms": "300000",
+               "poll.interval.ms": "5000",
            }
        }),
     )
