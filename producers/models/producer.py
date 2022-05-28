@@ -60,6 +60,6 @@ class Producer:
         """Prepares the producer for exit by cleaning up the producer"""
         try:
             self.producer.flush()
-            logger.info("producer closed!")
+            logger.info(f"producer for topic {self.topic_name} closed!")
         except Exception as e:
-            logger.info(f"failed to close producer: {e}")
+            logger.info(f"failed to close producer for topic {self.topic_name}: {e}")
