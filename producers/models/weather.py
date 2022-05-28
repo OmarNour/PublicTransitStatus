@@ -90,4 +90,4 @@ class Weather(Producer):
                 self.status.name,
             )
         except Exception as e:
-            logger.info(f"faile to post weather data, url: {Weather.url}, \n{e}")
+            logger.info(f"failed to post weather data, url: {Weather.url}, \n{e}")
