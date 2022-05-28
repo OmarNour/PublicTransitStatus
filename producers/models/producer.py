@@ -31,19 +31,10 @@ class Producer:
         self.num_partitions = num_partitions
         self.num_replicas = num_replicas
 
-        #
-        #
-        # TODO: Configure the broker properties below. Make sure to reference the project README
-        # and use the Host URL for Kafka and Schema Registry!
-        #
-        #
         self.broker_properties = {"bootstrap.servers": self.BROKER_URL}
         self.schema_registry = CachedSchemaRegistryClient({"url": self.SCHEMA_REGISTRY_URL})
-        # If the topic does not already exist, try to create it
+
         self.create_topic()
-
-        # TODO: Configure the AvroProducer
-
         self.producer = AvroProducer(config=self.broker_properties
                                      , schema_registry=self.schema_registry
                                      , default_key_schema=self.key_schema
@@ -51,12 +42,6 @@ class Producer:
 
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
-        #
-        #
-        # TODO: Write code that creates the topic for this producer if it does not already exist on
-        # the Kafka Broker.
-        #
-        #
         if self.topic_name not in Producer.existing_topics:
             try:
                 admin_client = AdminClient(self.broker_properties)
@@ -73,14 +58,8 @@ class Producer:
 
     def close(self):
         """Prepares the producer for exit by cleaning up the producer"""
-        #
-        #
-        # TODO: Write cleanup code for the Producer here
-        #
-        #
-        self.producer.flush()
-        logger.info("producer close incomplete - skipping")
-
-    def key_events(self):
-        """Use this function to get the key for Kafka Events"""
-        return int(round(time.time() * 1000))
+        try:
+            self.producer.flush()
+            logger.info("producer closed!")
+        except Exception as e:
+            logger.info(f"failed to close producer: {e}")
