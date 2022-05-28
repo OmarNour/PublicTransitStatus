@@ -59,7 +59,7 @@ class Station(Producer):
                 },
             )
         except Exception as e:
-            logger.info(f"failed to producer data for topic {self.topic_name}: {e}")
+            logger.info(f"failed to producer data for topic {self.topic_name}:\n{e}")
 
     def __str__(self):
         return "Station | {:^5} | {:<30} | Direction A: | {:^5} | departing to {:<30} | Direction B: | {:^5} | departing to {:<30} | ".format(

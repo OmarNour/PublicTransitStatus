@@ -14,9 +14,7 @@ logger = logging.getLogger(__name__)
 class Turnstile(Producer):
     topic_name = "org.chicago.cta.turnstiles.table.v1"
     key_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/turnstile_key.json")
-    value_schema = avro.load(
-       f"{Path(__file__).parents[0]}/schemas/turnstile_value.json"
-    )
+    value_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/turnstile_value.json")
 
     def __init__(self, station):
         """Create the Turnstile"""
@@ -46,4 +44,4 @@ class Turnstile(Producer):
                     },
                 )
         except Exception as e:
-            logger.info(f"failed to producer data for topic {self.topic_name}: {e}")
+            logger.info(f"failed to producer data for topic {self.topic_name}:\n{e}")
