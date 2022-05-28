@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class Turnstile(Producer):
-    topic_name = "org.chicago.cta.turnstiles.table.v1"
+    topic_name = "org.chicago.cta.turnstiles.v1"
     key_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/turnstile_key.json")
     value_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/turnstile_value.json")
 
