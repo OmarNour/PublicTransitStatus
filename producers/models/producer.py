@@ -48,8 +48,8 @@ class Producer:
                 topic_list = [NewTopic(topic=self.topic_name, num_partitions=self.num_partitions, replication_factor=self.num_replicas)]
                 admin_client.create_topics(topic_list)
 
-                # logger.info("topic creation kafka integration incomplete - skipping")
                 Producer.existing_topics.add(self.topic_name)
+                logger.info(f"new topic created, {self.topic_name} ")
             except Exception as e:
                 print(f"failed to create topic {self.topic_name}: {e}")
 
