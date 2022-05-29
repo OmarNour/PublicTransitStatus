@@ -64,20 +64,23 @@ class KafkaConsumer:
 
     def _consume(self):
         """Polls for a message. Returns 1 if a message was received, 0 otherwise"""
-        message = self.consumer.poll(timeout=self.consume_timeout)
-        if message is None:
-            logger.info(f"no message to consume from topic {self.topic_name_pattern}")
-            to_return = 0
-        elif message.error() is not None:
-            logger.info(f"error from consumer {message.error()}")
-            to_return = 0
-        else:
-            self.message_handler(message)
-            logger.info(f"consumed message {message.key()}: {message.value()}")
-            to_return = 1
+        try:
+            message = self.consumer.poll(timeout=self.consume_timeout)
+            if message is None:
+                logger.info(f"no message to consume from topic {self.topic_name_pattern}")
+                to_return = 0
+            elif message.error() is not None:
+                logger.info(f"error from consumer {message.error()}")
+                to_return = 0
+            else:
+                logger.info(f"from topic {self.topic_name_pattern}, consume message {message}")
+                self.message_handler(message)
+                to_return = 1
 
-        # logger.info("_consume is incomplete - skipping")
-        return to_return
+            return to_return
+        except Exception as e:
+            logger.warning(f"failed to consume message : {e}")
+            return 0
 
     def close(self):
         """Cleans up any open kafka consumers"""

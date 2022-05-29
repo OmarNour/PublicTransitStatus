@@ -15,9 +15,9 @@ class Weather:
 
     def process_message(self, message):
         """Handles incoming weather data"""
-        logger.info(f"message from weather!: {message}")
         try:
+            logger.info(f"message from weather!: {message}")
             self.temperature = message.value()['temperature']
             self.status = message.value()['status']
         except Exception as e:
-            logger.info(f"invalid message: {message}")
+            logger.info(f"failed to process weather message: {e}")
