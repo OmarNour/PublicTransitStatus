@@ -34,7 +34,8 @@ class KafkaConsumer:
 
         self.broker_properties = {'bootstrap.servers': KafkaConsumer.BROKER_URL,
                                   'group.id': KafkaConsumer.GROUP_ID,
-                                  'auto.offset.reset': 'earliest'}
+                                  "auto.offset.reset": "earliest" if offset_earliest else "latest"
+                                  }
 
         if is_avro is True:
             self.broker_properties["schema.registry.url"] = KafkaConsumer.SCHEMA_REGISTRY_URL
@@ -71,7 +72,8 @@ class KafkaConsumer:
             print(f"error from consumer {message.error()}")
             to_return = 0
         else:
-            print(f"consumed message {message.key()}: {message.value()}")
+            self.message_handler(message)
+            # print(f"consumed message {message.key()}: {message.value()}")
             to_return = 1
 
         # logger.info("_consume is incomplete - skipping")

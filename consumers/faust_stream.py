@@ -29,7 +29,7 @@ class TransformedStation(faust.Record):
 
 
 app = faust.App("stations-stream", broker="kafka://localhost:9092", store="memory://")
-topic = app.topic("org.chicago.cta.stations.table.v0", value_type=Station)
+topic = app.topic("kc-postgres-stations", value_type=Station)
 out_topic = app.topic("org.chicago.cta.stations.table.v1", value_type=TransformedStation, partitions=1)
 table = app.Table(
     name="trx_stations_table",
@@ -47,7 +47,7 @@ async def transform_station(stations):
             line_color = "red"
         elif station.blue:
             line_color = "red"
-        elif station.gree:
+        elif station.green:
             line_color = "green"
 
         table[station.station_id] = TransformedStation(station_id=station.station_id,
