@@ -26,7 +26,7 @@ CREATE TABLE turnstile (
 CREATE TABLE turnstile_summary
 WITH (VALUE_FORMAT='json') AS
     SELECT station_id
-        ,COUNT(distinct station_id) AS count
+        ,COUNT(station_id) AS count
     FROM turnstile
     GROUP BY station_id;
 """
@@ -41,7 +41,9 @@ def execute_statement():
 
     resp = requests.post(
         f"{KSQL_URL}/ksql",
-        headers={"Content-Type": "application/vnd.ksql.v1+json"},
+        headers={"Content-Type": "application/vnd.ksql.v1+json",
+                 "Accept": "application/vnd.ksql.v1+json",
+                 },
         data=json.dumps(
             {
                 "ksql": KSQL_STATEMENT,
