@@ -13,7 +13,11 @@ logger = logging.getLogger(__name__)
 class KafkaConsumer:
     """Defines the base kafka consumer class"""
     BROKER_URL = "PLAINTEXT://localhost:9092,PLAINTEXT://localhost:9093,PLAINTEXT://localhost:9094"
+    # BROKER_URL = "PLAINTEXT://kafka0:9092,PLAINTEXT://kafka1:9093,PLAINTEXT://kafka1:9094"
+
     SCHEMA_REGISTRY_URL = "http://localhost:8081"
+    # SCHEMA_REGISTRY_URL = "http://schema-registry:8081"
+
     GROUP_ID = " Chicago_PTS_consumers"
 
     def __init__(

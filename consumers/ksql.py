@@ -11,6 +11,8 @@ logger = logging.getLogger(__name__)
 
 
 KSQL_URL = "http://localhost:8088"
+# KSQL_URL = "http://ksql:8088"
+
 
 KSQL_STATEMENT = """
 CREATE TABLE turnstile (

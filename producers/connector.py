@@ -6,7 +6,12 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-KAFKA_CONNECT_URL = "http://localhost:8083/connectors"
+KAFKA_CONNECT_URL = "http://localhost:8083"
+# KAFKA_CONNECT_URL = "http://kafka-connect:8083"
+
+db_url = "jdbc:postgresql://localhost:5432/cta"
+# db_url = "jdbc:postgresql://postgres:5432/cta"
+
 CONNECTOR_NAME = "stations"
 
 
@@ -14,7 +19,7 @@ def configure_connector():
     """Starts and configures the Kafka Connect connector"""
     logging.debug("creating or updating kafka connect connector...")
 
-    resp = requests.get(f"{KAFKA_CONNECT_URL}/{CONNECTOR_NAME}")
+    resp = requests.get(f"{KAFKA_CONNECT_URL}/connectors/{CONNECTOR_NAME}")
     if resp.status_code == 200:
         logging.debug("connector already created skipping recreation")
         return
@@ -32,14 +37,14 @@ def configure_connector():
                "value.converter": "org.apache.kafka.connect.json.JsonConverter",
                "value.converter.schemas.enable": "false",
                "batch.max.rows": "500",
-               "connection.url": "jdbc:postgresql://localhost:5432/cta",
-               "connection.user": "cta_admin",
-               "connection.password": "chicago",
+               "connection.url": db_url,
+               "connection.user": "postgres",
+               "connection.password": "postgres",
                "table.whitelist": "stations",
                "mode": "incrementing",
                "incrementing.column.name": "stop_id",
                "topic.prefix": "kc-postgres-",
-               "poll.interval.ms": "5000",
+               "poll.interval.ms": "50000",
            }
        }),
     )

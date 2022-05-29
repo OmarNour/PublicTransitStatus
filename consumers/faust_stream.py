@@ -5,6 +5,9 @@ import faust
 
 logger = logging.getLogger(__name__)
 
+BROKER_URL = "kafka://localhost:9092,kafka://localhost:9093,kafka://localhost:9094"
+# BROKER_URL = "kafka://kafka0:9092,kafka://kafka1:9093,kafka://kafka1:9094"
+
 
 # Faust will ingest records from Kafka in this format
 class Station(faust.Record):
@@ -28,7 +31,7 @@ class TransformedStation(faust.Record):
     line: str
 
 
-app = faust.App("stations-stream", broker="kafka://localhost:9092", store="memory://")
+app = faust.App("stations-stream", broker=BROKER_URL, store="memory://")
 topic = app.topic("kc-postgres-stations", value_type=Station)
 out_topic = app.topic("org.chicago.cta.stations.table.v1", value_type=TransformedStation, partitions=1)
 table = app.Table(

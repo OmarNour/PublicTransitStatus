@@ -11,7 +11,10 @@ logger = logging.getLogger(__name__)
 
 class Producer:
     BROKER_URL = "PLAINTEXT://localhost:9092,PLAINTEXT://localhost:9093,PLAINTEXT://localhost:9094"
+    # BROKER_URL = "PLAINTEXT://kafka0:9092,PLAINTEXT://kafka1:9093,PLAINTEXT://kafka1:9094"
+
     SCHEMA_REGISTRY_URL = "http://localhost:8081"
+    # SCHEMA_REGISTRY_URL = "http://schema-registry:8081"
 
     # Tracks existing topics across all Producer instances
     existing_topics = set([])
