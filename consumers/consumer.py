@@ -67,7 +67,7 @@ class KafkaConsumer:
         """Polls for a message. Returns 1 if a message was received, 0 otherwise"""
         message = self.consumer.poll(timeout=self.consume_timeout)
         if message is None:
-            logger.info(f"no message to consume from topice {self.topic_name_pattern}")
+            logger.info(f"no message to consume from topic {self.topic_name_pattern}")
             to_return = 0
         elif message.error() is not None:
             logger.info(f"error from consumer {message.error()}")
