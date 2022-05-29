@@ -67,8 +67,8 @@ class Weather(Producer):
     def run(self, month):
         try:
             self._set_weather(month)
-            data = {"key_schema": self.key_schema,
-                    "value_schema": self.value_schema,
+            data = {"key_schema": json.dumps(Weather.key_schema),
+                    "value_schema": json.dumps(Weather.value_schema),
                     "records":
                         [
                             {
@@ -84,10 +84,12 @@ class Weather(Producer):
             )
             resp.raise_for_status()
 
+
+        except Exception as e:
             logger.debug(
                 "sent weather data to kafka, temp: %s, status: %s",
                 self.temp,
                 self.status.name,
             )
-        except Exception as e:
+
             logger.info(f"failed to post weather data, url: {Weather.url}, \n{e}")
